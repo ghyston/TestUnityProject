@@ -6,6 +6,7 @@ Obj/
 UnityGenerated/
 Library/
 Assets/AssetStoreTools*
+TestUnityProjectIos/
 
 # ===================================== #
 # Visual Studio / MonoDevelop generated #
