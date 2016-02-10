@@ -11,6 +11,8 @@ public class bulletScript : MonoBehaviour {
 		GetComponent<Rigidbody2D> ().velocity = new Vector2 (rotationEuler.x, rotationEuler.y) * speed;
 		//Debug.Log ("rotation: " + rotationEuler.x + " " + rotationEuler.y);
 
+		Destroy(gameObject, 5);
+
 	}
 	
 	// Update is called once per frame
@@ -18,8 +20,16 @@ public class bulletScript : MonoBehaviour {
 		
 	}
 
-	void onBecameInvisible()
+	void OnTriggerEnter2D(Collider2D coll)
 	{
-		Destroy (gameObject);
+		if (coll.gameObject.name == "zombie") 
+		{
+			Destroy (coll.gameObject);
+			Destroy (gameObject);
+
+			GameObject corpse = coll.gameObject.GetComponent<zombiescript> ().corpseObject;
+			Instantiate (corpse, coll.gameObject.transform.position, coll.gameObject.transform.rotation); 
+		}
 	}
+
 }

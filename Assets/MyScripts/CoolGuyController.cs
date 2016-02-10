@@ -7,7 +7,7 @@ public class CoolGuyController : MonoBehaviour {
 	Rigidbody2D myBody;
 	System.DateTime lastShot;
 
-	public float moveForce = 5;
+	public float moveForce = 2;
 	public double timeBetweenBullets = 0.5d;
 	public GameObject bulletType;
 
@@ -21,14 +21,24 @@ public class CoolGuyController : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () 
 	{
-		Vector2 moveVec = new Vector2 (CrossPlatformInputManager.GetAxis ("Horizontal"), CrossPlatformInputManager.GetAxis ("Vertical"));
-		moveVec *= moveForce;
-		myBody.AddForce (moveVec);
+		
+
+		Vector3 moveVec = new Vector3 (CrossPlatformInputManager.GetAxis ("Horizontal"), CrossPlatformInputManager.GetAxis ("Vertical"), 0);
+		moveVec.Normalize ();
+		//Debug.Log ( "1: MoveVec: " + moveVec.ToString("F4") + " moveForce: " + moveForce + " delta: " + Time.fixedDeltaTime);
+		moveVec.x =  moveVec.x * moveForce * Time.fixedDeltaTime;
+		moveVec.y =  moveVec.y * moveForce * Time.fixedDeltaTime;
+		//Debug.Log ( "2: MoveVec: " + moveVec.ToString("F4") + " moveForce: " + moveForce);
+		//myBody.AddForce (moveVec);
+		transform.position += moveVec;
 
 		Vector2 angleVec = new Vector2 (CrossPlatformInputManager.GetAxis ("Horizontal1"), CrossPlatformInputManager.GetAxis ("Vertical1"));
 		float mg = angleVec.magnitude;
 		//Debug.Log(string.Format("Magnitude: {0}", mg)); // mg 0..1
 
+		if (mg == 0)
+			return;
+		
 		float angle = Vector3.Angle(angleVec, new Vector3(1, 0, 0));
 		if (angleVec.y < 0) angle *= -1;
 		var rotationVector = transform.rotation.eulerAngles;
