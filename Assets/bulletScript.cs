@@ -3,7 +3,7 @@ using System.Collections;
 
 public class bulletScript : MonoBehaviour {
 
-	public int speed = 6;
+	public float speed = 6;
 
 	// Use this for initialization
 	void Start () {
@@ -11,7 +11,7 @@ public class bulletScript : MonoBehaviour {
 		GetComponent<Rigidbody2D> ().velocity = new Vector2 (rotationEuler.x, rotationEuler.y) * speed;
 		//Debug.Log ("rotation: " + rotationEuler.x + " " + rotationEuler.y);
 
-		Destroy(gameObject, 5);
+		Destroy(gameObject, 2);
 
 	}
 	
