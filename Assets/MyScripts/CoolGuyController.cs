@@ -10,6 +10,7 @@ public class CoolGuyController : MonoBehaviour {
 	public float moveForce = 2;
 	public double timeBetweenBullets = 0.5d;
 	public GameObject bulletType;
+	//public GameObject weapon;
 
 	// Use this for initialization
 	void Start () 
@@ -25,12 +26,10 @@ public class CoolGuyController : MonoBehaviour {
 
 		Vector3 moveVec = new Vector3 (CrossPlatformInputManager.GetAxis ("Horizontal"), CrossPlatformInputManager.GetAxis ("Vertical"), 0);
 		moveVec.Normalize ();
-		//Debug.Log ( "1: MoveVec: " + moveVec.ToString("F4") + " moveForce: " + moveForce + " delta: " + Time.fixedDeltaTime);
-		moveVec.x =  moveVec.x * moveForce * Time.fixedDeltaTime;
-		moveVec.y =  moveVec.y * moveForce * Time.fixedDeltaTime;
-		//Debug.Log ( "2: MoveVec: " + moveVec.ToString("F4") + " moveForce: " + moveForce);
-		//myBody.AddForce (moveVec);
-		transform.position += moveVec;
+		//moveVec.x =  moveVec.x * moveForce * Time.fixedDeltaTime;
+		//moveVec.y =  moveVec.y * moveForce * Time.fixedDeltaTime;
+		moveVec *= moveForce * Time.fixedDeltaTime;
+		transform.position += moveVec; //@todo: Rigidbody.MovePosition?
 
 		Vector2 angleVec = new Vector2 (CrossPlatformInputManager.GetAxis ("Horizontal1"), CrossPlatformInputManager.GetAxis ("Vertical1"));
 		float mg = angleVec.magnitude;
@@ -53,6 +52,7 @@ public class CoolGuyController : MonoBehaviour {
 			{				
 				lastShot = System.DateTime.Now;
 				GameObject bullet = Instantiate (bulletType, transform.position, transform.rotation) as GameObject;
+				Physics2D.IgnoreCollision(GetComponent<BoxCollider2D>(), bullet.GetComponent<BoxCollider2D>());
 			}
 		}
 	}
