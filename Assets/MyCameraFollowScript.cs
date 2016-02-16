@@ -12,7 +12,9 @@ public class MyCameraFollowScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		//transform.position.Set (followToObj.transform.position.x, followToObj.transform.position.y, -10);
+		if (followToObj == null)
+			return;
+		
 		transform.position = new Vector3(followToObj.transform.position.x, followToObj.transform.position.y, -10);
 	}
 }

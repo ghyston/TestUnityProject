@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BaseWeapon : MonoBehaviour {
+public class BaseWeapon {
 
 	public GameObject bulletType;
 	public double timeBetweenBullets = 0.5d;
@@ -14,15 +14,16 @@ public class BaseWeapon : MonoBehaviour {
 		return (totaSeconds > timeBetweenBullets);
 	}
 
-	virtual public void Shot(GameObject shooter)
+	virtual public bool Shot(GameObject shooter)
 	{
 		if (!checkTiming())
-			return;
+			return false;
 		
 		// some overridable code
+		return true;
 	}
 
-	public virtual string GetName() {
+	virtual public string GetName() {
 		return " Хуй моржовый! ";
 	}
 
