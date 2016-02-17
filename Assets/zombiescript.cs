@@ -14,7 +14,7 @@ public class zombiescript : MonoBehaviour {
 	private bool following = false;
 
 	public float deltaHitTime = 0.7f;
-	public float hitDamage = 1.2f;
+	public int hitDamage = 3;
 
 	// Use this for initialization
 	void Start () {
@@ -71,7 +71,7 @@ public class zombiescript : MonoBehaviour {
 		if (!targetObject)
 			return;
 
-		targetObject.GetComponent<Health> ().takeDamage (hitDamage);
+		targetObject.GetComponent<Health> ().TakeDamage (hitDamage);
 	}
 
 	public void OnPlayerDead()

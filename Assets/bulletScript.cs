@@ -27,6 +27,24 @@ public class bulletScript : MonoBehaviour {
 			Destroy (coll.gameObject);
 			Destroy (gameObject);
 
+			if (Random.value > 0.2) {
+				float rnd = Random.value;
+				GameObject gift;
+				if (rnd < 0.33) 
+				{
+					gift = Resources.Load ("DragableHealth") as GameObject;
+				} 
+				else if (rnd > 0.66) 
+				{
+					gift = Resources.Load ("DragableAmmoPistol") as GameObject;
+				}
+				else 
+				{
+					gift = Resources.Load ("DragableAmmoShotgun") as GameObject;
+				}
+				Instantiate(gift, coll.gameObject.transform.position, coll.gameObject.transform.rotation);
+			}
+
 			GameObject corpse = coll.gameObject.GetComponent<zombiescript> ().corpseObject;
 			Instantiate (corpse, coll.gameObject.transform.position, coll.gameObject.transform.rotation); 
 		}

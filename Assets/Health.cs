@@ -4,17 +4,30 @@ using System.Collections;
 
 public class Health : MonoBehaviour {
 
-	public float health = 100.0f;
+	public int maxHealth = 100;
+	public int health = 100;
 
 	void Start()
 	{
 		UpdateHealthLabel ();
 	}
 
-	public void takeDamage(float damage)
+	public void TakeDamage(int damage)
 	{
 		health -= damage;
 		CheckPulse ();
+		UpdateHealthLabel ();
+	}
+
+	public bool isFull()
+	{
+		return health == maxHealth;
+	}
+
+	public void IncreaseHealth(int amount)
+	{
+		int newValue = health + amount;
+		health = Mathf.Min (newValue, maxHealth);
 		UpdateHealthLabel ();
 	}
 
@@ -40,8 +53,7 @@ public class Health : MonoBehaviour {
 
 	void UpdateHealthLabel()
 	{
-		Debug.Log ("UpdateHealthLabel()" + health);
 		//@todo: all work with gui would be better to 
-		GameObject.Find ("HealthLabel").GetComponent<Text> ().text = string.Format ("HEALTH: {0}", Mathf.RoundToInt(health));
+		GameObject.Find ("HealthLabel").GetComponent<Text> ().text = string.Format ("HEALTH: {0}", health);
 	}
 }

@@ -51,6 +51,13 @@ public class Inventory : MonoBehaviour { //@todo: should it be a mono behaviour?
 		updateAmmoLabel ();
 	}
 
+	public void increasePocketsAmount(int weaponType)
+	{
+		Ammo ammoByType = (Ammo)ammo [weaponType];
+		ammoByType.pocket += ammoByType.magazineSize;
+		updateAmmoLabel ();
+	}
+
 	public int getCurrentMagazineAmount()
 	{
 		return ((Ammo)ammo [currentWeaponIndex]).magazine;
