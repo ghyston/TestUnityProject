@@ -46,7 +46,9 @@ public class Health : MonoBehaviour {
 		ZombieFabric fabric = GameObject.FindObjectOfType<ZombieFabric> ();
 		fabric.enabled = false;
 
-		GameObject.Find ("RestartButton").GetComponent<Button> ().interactable = true;
+		//GameObject.Find ("RestartButton").GetComponent<Button> ().interactable = true;
+		((GameGUIScript)GameObject.Find("GameGUI").GetComponent<GameGUIScript>()).ShowRestartPopup();
+
 
 		Destroy (this.gameObject);
 	}

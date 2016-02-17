@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class RestartButtonScript : MonoBehaviour {
 
@@ -10,7 +11,10 @@ public class RestartButtonScript : MonoBehaviour {
 	{
 		GetComponent<Button> ().interactable = false;
 
-		GameObject instance = Instantiate (playerType, Vector3.zero, Quaternion.identity) as GameObject;
+		//SceneManager.LoadScene ("FightingScene");
+
+
+		/*GameObject instance = Instantiate (playerType, Vector3.zero, Quaternion.identity) as GameObject;
 		GameObject.FindObjectOfType<MyCameraFollowScript> ().followToObj = instance;
 
 		//tell the zombies, they have new food!
@@ -19,6 +23,6 @@ public class RestartButtonScript : MonoBehaviour {
 			((zombiescript)go).targetObject = instance;;
 		}
 		ZombieFabric fabric = GameObject.FindObjectOfType<ZombieFabric> ();
-		fabric.enabled = true;
+		fabric.enabled = true;*/
 	}
 }
