@@ -27,7 +27,9 @@ public class bulletScript : MonoBehaviour {
 			Destroy (coll.gameObject);
 			Destroy (gameObject);
 
-			if (Random.value < 0.2) {
+			GameObject.Find ("DropingGiftsFactory").GetComponent<DropingGiftsScript> ().GenerateGift (coll.gameObject.transform.position);
+
+			/*if (Random.value < 0.2) {
 				float rnd = Random.value;
 				GameObject gift;
 				if (rnd < 0.33) 
@@ -43,7 +45,7 @@ public class bulletScript : MonoBehaviour {
 					gift = Resources.Load ("DragableAmmoShotgun") as GameObject;
 				}
 				Instantiate(gift, coll.gameObject.transform.position, Quaternion.identity);
-			}
+			}*/
 
 			GameObject corpse = coll.gameObject.GetComponent<zombiescript> ().corpseObject;
 			Instantiate (corpse, coll.gameObject.transform.position, coll.gameObject.transform.rotation); 

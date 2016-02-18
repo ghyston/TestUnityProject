@@ -6,9 +6,10 @@ public class ZombieFabric : MonoBehaviour {
 	public GameObject zombieObject;
 
 	System.DateTime lastZombieCreatedTime;
-	public double minCreateTime = 3.0d;
-	public double maxCreateTime = 5.0d;
-	public float doubleZombiesTime = 15.0f;
+	public double minCreateTime = 2.0d;
+	public double maxCreateTime = 4.0d;
+	public float increaseZombiesTime = 7.0f;
+	public float increaseZombiesFactor = 0.8f;
 	public bool isEnabled = true;
 	public float innerRadius = 5;
 	public float outherRadius = 3;
@@ -17,13 +18,13 @@ public class ZombieFabric : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		InvokeRepeating ("DecreaseZombiesTime", doubleZombiesTime, doubleZombiesTime);
+		InvokeRepeating ("DecreaseZombiesTime", increaseZombiesTime, increaseZombiesTime);
 	}
 
 	void DecreaseZombiesTime()
 	{
-		minCreateTime /= 2;
-		maxCreateTime /= 2;
+		minCreateTime *= increaseZombiesFactor;
+		maxCreateTime *= increaseZombiesFactor;
 	}
 	
 	// Update is called once per frame
