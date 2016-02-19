@@ -52,7 +52,9 @@ public class ZombieFabric : MonoBehaviour {
 		rndVec.x += ((rndVec.x < 0) ? -1 : 1) * innerRadius;
 		rndVec.y += ((rndVec.y < 0) ? -1 : 1) * innerRadius;
 
-		GameObject instance = Instantiate (zombieObject, new Vector3 (rndVec.x, rndVec.y, 0), Quaternion.identity) as GameObject;
+		Vector3 genPos = new Vector3 (transform.position.x + rndVec.x, transform.position.y + rndVec.y, 0);
+
+		GameObject instance = Instantiate (zombieObject, genPos, Quaternion.identity) as GameObject;
 		instance.GetComponent<zombiescript>().targetObject = GameObject.Find("Player");
 		instance.GetComponent<zombiescript>().pathFinder = pathFinder;
 		instance.name = "zombie";

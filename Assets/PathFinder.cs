@@ -51,6 +51,8 @@ public class PathFinder : MonoBehaviour {
 	public Vector2 getDirection(Vector3 position)
 	{
 		IntVec2 tileCoords = getTileCoordsByTransformCoords (position);
+		if (IsOutOfRange (tileCoords))
+			return new Vector2(0, 0);
 		return tiles [tileCoords.x] [tileCoords.y].moveVector;
 	}
 
@@ -94,14 +96,20 @@ public class PathFinder : MonoBehaviour {
 	}
 
 
+	bool IsOutOfRange(IntVec2 coords)
+	{
+		return ((coords.x < 0) || (coords.y < 0) ||
+			(coords.x >= countX) || (coords.y >= countY));
+	}
+
 	void UpdatePathFinder()
 	{
 		if (!targetObject)
 			return;
 
 		IntVec2 targetTileCoords = getTileCoordsByTransformCoords (targetObject.transform.position);
-		if ((targetTileCoords.x == prevTileCoords.x) &&
-		   (targetTileCoords.y == prevTileCoords.y))
+
+		if (IsOutOfRange (targetTileCoords))
 			return;
 
 		RecalculateTarget (targetTileCoords);
@@ -149,7 +157,8 @@ public class PathFinder : MonoBehaviour {
 
 		//TileSettings tile = tiles [tileCoords.x] [tileCoords.y];
 		//TileSettings * tmp = &(tiles [tileCoords.x] [tileCoords.y]);
-		if (tiles [tileCoords.x] [tileCoords.y].isCalculated)
+		if (tiles [tileCoords.x] [tileCoords.y].isCalculated &
+			(tiles [tileCoords.x] [tileCoords.y].distance < distance))
 			return;
 
 
@@ -166,7 +175,60 @@ public class PathFinder : MonoBehaviour {
 		//@todo: use distance!
 
 		//Debug.Log (tmpCounter + ". CalculateTile " + tileCoords.x + ", " + tileCoords.y);
-		if (tileCoords.x > 0) {
+
+		bool leftLimit = tileCoords.x > 0;
+		bool rightLimit = tileCoords.x < (countX - 1);
+		bool downLimit = tileCoords.y > 0;
+		bool upLimit = tileCoords.y < (countY - 1);
+
+		///////
+		if (leftLimit & upLimit) {
+			IntVec2 left;
+			left.x = tileCoords.x - 1;
+			left.y = tileCoords.y + 1;
+
+			TmpTileParam param;
+			param.prevCoords = tileCoords;
+			param.coords = left;
+			param.distance = distance + 1.5f;	
+		}
+
+		if (rightLimit & upLimit) {
+			IntVec2 left;
+			left.x = tileCoords.x + 1;
+			left.y = tileCoords.y + 1;
+
+			TmpTileParam param;
+			param.prevCoords = tileCoords;
+			param.coords = left;
+			param.distance = distance + 1.5f;	
+		}
+
+		if (leftLimit & downLimit) {
+			IntVec2 left;
+			left.x = tileCoords.x - 1;
+			left.y = tileCoords.y - 1;
+
+			TmpTileParam param;
+			param.prevCoords = tileCoords;
+			param.coords = left;
+			param.distance = distance + 1.5f;	
+		}
+
+		if (rightLimit & downLimit) {
+			IntVec2 left;
+			left.x = tileCoords.x + 1;
+			left.y = tileCoords.y - 1;
+
+			TmpTileParam param;
+			param.prevCoords = tileCoords;
+			param.coords = left;
+			param.distance = distance + 1.5f;	
+		}
+
+		//////////
+
+		if (leftLimit) {
 			
 			IntVec2 left;
 			left.x = tileCoords.x - 1;
@@ -179,7 +241,7 @@ public class PathFinder : MonoBehaviour {
 
 			openCells.Add (param);
 		}
-		if (tileCoords.x < (countX - 1)) {
+		if (rightLimit) {
 			IntVec2 right;
 			right.x = tileCoords.x + 1;
 			right.y = tileCoords.y;	
@@ -191,7 +253,7 @@ public class PathFinder : MonoBehaviour {
 
 			openCells.Add (param);
 		}
-		if (tileCoords.y > 0) {
+		if (downLimit) {
 			IntVec2 down;
 			down.x = tileCoords.x;
 			down.y = tileCoords.y - 1;	
@@ -203,7 +265,7 @@ public class PathFinder : MonoBehaviour {
 
 			openCells.Add (param);
 		}
-		if (tileCoords.y < (countY - 1)) {
+		if (upLimit) {
 			IntVec2 up;
 			up.x = tileCoords.x;
 			up.y = tileCoords.y + 1;	
