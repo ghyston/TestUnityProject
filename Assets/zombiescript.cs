@@ -3,6 +3,8 @@ using System.Collections;
 
 public class zombiescript : MonoBehaviour {
 
+	public PathFinder pathFinder;
+
 	public GameObject corpseObject;
 	public GameObject targetObject;
 	public float speed = 2;
@@ -42,9 +44,13 @@ public class zombiescript : MonoBehaviour {
 
 	void updateVelocity()
 	{
-		Vector3 vecToTarget = targetObject.transform.position - transform.position;
+		Vector2 dir = pathFinder.getDirection (transform.position);
+		Vector3 vecToTarget = new Vector3 (dir.x, dir.y, 0);
+
+		//Vector3 vecToTarget = targetObject.transform.position - transform.position;
 		vecToTarget.Normalize ();
-		GetComponent<Rigidbody2D> ().velocity = vecToTarget * speed;
+		Vector3 curVelocity = GetComponent<Rigidbody2D> ().velocity;
+		GetComponent<Rigidbody2D> ().velocity = curVelocity / 2.0f + vecToTarget * speed;
 		GetComponent<Rigidbody2D> ().angularVelocity = 0;
 
 		transform.rotation = Quaternion.FromToRotation (new Vector3(1, 0, 0) , targetObject.transform.position - transform.position);

@@ -28,7 +28,7 @@ public class GameGUIScript : MonoBehaviour {
 		GUI.backgroundColor = new Color(0.5f, 0.0f, 0.0f);
 		if (GUI.Button (new Rect (10, 70, 180, 45), "Restart world")) 
 		{
-			SceneManager.LoadScene ("FightingScene");		
+			SceneManager.LoadScene ("JungleScene");		
 		}
 
 	}
